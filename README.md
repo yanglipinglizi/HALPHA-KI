@@ -2,8 +2,8 @@
 It's a health intelligence dashboard for analyzing multi-level patient data extracted from various sources from a distributed platform that implements a digital health assistant.
 
 #### Basic Functions:  
-• Extract and integrate patient data from various sources (e.g., wearables, health records, voice assistant) without comprising scalability and performance
-• Perform visual analyses of patient data at different levels, (e.g., patient- and technology-centered)
+• Extract and integrate patient data from various sources (e.g., wearables, health records, voice assistant) without comprising scalability and performance   
+• Perform visual analyses of patient data at different levels, (e.g., patient- and technology-centered)  
 • Detection of trends or abnormalities and automatic summarization of health reports with large language models
 
 ## Project Structure
