@@ -1,0 +1,29 @@
+{
+  "insightsApp": {
+    "bloodpressure": {
+      "home": {
+        "title": "Blood pressures",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Blood pressure",
+        "createOrEditLabel": "Create or edit a Blood pressure",
+        "notFound": "No Blood pressures found"
+      },
+      "created": "A new Blood pressure is created with identifier {{ param }}",
+      "updated": "A Blood pressure is updated with identifier {{ param }}",
+      "deleted": "A Blood pressure is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Blood pressure {{ id }}?"
+      },
+      "detail": {
+        "title": "Blood pressure"
+      },
+      "id": "ID",
+      "systolic": "Systolic",
+      "diastolic": "Diastolic",
+      "pulse": "Pulse",
+      "recorded_at": "Recorded At",
+      "user_id": "User Id",
+      "patient": "Patient"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "insightsApp": {
+    "bloodpressure": {
+      "home": {
+        "title": "Blutdruck",
+        "refreshListLabel": "Liste aktualisieren",
+        "createLabel": "Blutdruck erstellen",
+        "createOrEditLabel": "Blutdruck erstellen oder bearbeiten",
+        "notFound": "Keine Blutdruck gefunden"
+      },
+      "created": "Blutdruck erstellt mit ID {{ param }}",
+      "updated": "Blutdruck aktualisiert mit ID {{ param }}",
+      "deleted": "Blutdruck gelöscht mit ID {{ param }}",
+      "delete": {
+        "question": "Soll Blutdruck {{ id }} wirklich dauerhaft gelöscht werden?"
+      },
+      "detail": {
+        "title": "Blutdruck"
+      },
+      "id": "ID",
+      "systolic": "Systolisch",
+      "diastolic": "Diastolisch",
+      "pulse": "Puls",
+      "recorded_at": "Aufgenommen am",
+      "user_id": "User Id",
+      "patient": "Patient"
+    }
+  }
+}

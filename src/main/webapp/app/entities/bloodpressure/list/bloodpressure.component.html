@@ -1,0 +1,220 @@
+<div>
+  <div class="d-flex justify-content-end">
+    <button type="submit" (click)="previousState()" class="btn btn-info me-2" data-cy="entityDetailsBackButton">
+      <fa-icon icon="arrow-left"></fa-icon>&nbsp;
+      <span jhiTranslate="entity.action.back">Zurück</span>
+    </button>
+    <button type="button" [routerLink]="['/patient/' + id + '/view']" class="btn btn-primary me-2">
+      <fa-icon icon="eye"></fa-icon>&nbsp;<span>Patient Detail</span>
+    </button>
+    <button type="button" [routerLink]="['/user-activity/userId/' + userId]" class="btn btn-primary me-2">
+      <fa-icon icon="eye"></fa-icon>&nbsp;<span>User Activity</span>
+    </button>
+    <button type="button" [routerLink]="['/geo-location/userId/' + userId]" class="btn btn-primary">
+      <fa-icon icon="eye"></fa-icon>&nbsp;<span>Geo Location</span>
+    </button>
+  </div>
+  <h1 *ngIf="nameSelect">Blood Pressure & Pulse: Graphs and Insights for {{ userName }}User ID: {{ userId }}</h1>
+  <div>
+    <div class="alert alert-warning" id="no-result" *ngIf="bloodpressures?.length === 0">
+      <span jhiTranslate="insightsApp.bloodpressure.home.notFound">Keine Blood Pressures gefunden</span>
+    </div>
+
+    <div class="d-flex">
+      <div class="col-2 btn-group-vertical" role="group" aria-label="Page Navigation">
+        <button (click)="scrollTo('bp_pulse')" class="btn btn-secondary" *ngIf="bloodpressures && bloodpressures.length > 0">
+          Short-term Overview
+        </button>
+        <button
+          (click)="scrollTo('systolicFrequency')"
+          class="btn btn-secondary"
+          *ngIf="systolic_frequency && systolic_frequency.length > 0"
+        >
+          Frequency Distribution
+        </button>
+        <button (click)="scrollTo('scatterPlot')" class="btn btn-secondary" *ngIf="target_scatter && target_scatter.length > 0">
+          Classification & Comparsion Target
+        </button>
+        <button (click)="scrollTo('table')" class="btn btn-secondary" *ngIf="bp_pulse_over_year && bp_pulse_over_year.length > 0">
+          Annual Overview
+        </button>
+        <button (click)="scrollTo('subtable')" class="btn btn-secondary" *ngIf="subtable_insights && subtable_insights.length > 0">
+          Pre-post Event Comparsion
+        </button>
+        <button (click)="scrollTo('systolic_boxplot')" class="btn btn-secondary" *ngIf="systolic_box && systolic_box.length > 0">
+          Annual Trend Analysis
+        </button>
+      </div>
+      <div class="bg-light p-3 flex-grow-1" id="summaryContainer" *ngIf="bloodpressures && bloodpressures.length > 0">
+        <strong>Generating summary...</strong>
+      </div>
+    </div>
+
+    <h2 *ngIf="bloodpressures && bloodpressures.length > 0">Short-term overview</h2>
+    <button
+      id="btn7Days"
+      (click)="updateChart(7)"
+      type="button"
+      class="btn"
+      [ngClass]="{ 'btn-secondary': selectedDays !== 7, 'btn-dark': selectedDays === 7 }"
+      *ngIf="bloodpressures && bloodpressures.length > 0"
+    >
+      7 Days
+    </button>
+    <button
+      id="btn30Days"
+      (click)="updateChart(30)"
+      type="button"
+      class="btn"
+      [ngClass]="{ 'btn-secondary': selectedDays !== 30, 'btn-dark': selectedDays === 30 }"
+      *ngIf="bloodpressures && bloodpressures.length > 0"
+    >
+      30 Days
+    </button>
+    <button
+      id="btn90Days"
+      (click)="updateChart(90)"
+      type="button"
+      class="btn"
+      [ngClass]="{ 'btn-secondary': selectedDays !== 90, 'btn-dark': selectedDays === 90 }"
+      *ngIf="bloodpressures && bloodpressures.length > 0"
+    >
+      90 Days
+    </button>
+    <div class="row">
+      <div class="col-md-6">
+        <figure id="line_bp_pulse" style="margin-top: 20px"></figure>
+        <div class="alert alert-info" id="no-result" *ngIf="bp_pulse && bp_pulse.length > 0">
+          <span [innerHTML]="bp_pulse"></span>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <figure id="line_pulse_pressure" style="margin-top: 20px"></figure>
+        <div class="alert alert-info" id="no-result" *ngIf="pulse_pressure && pulse_pressure.length > 0">
+          <span [innerHTML]="pulse_pressure"></span>
+        </div>
+      </div>
+    </div>
+
+    <h2 *ngIf="bloodpressures && bloodpressures.length > 0">Frequency distribution in last three months</h2>
+    <div class="row">
+      <div class="col-md-6">
+        <figure id="systolicFrequency"></figure>
+        <div class="alert alert-info" id="no-result" *ngIf="systolic_frequency && systolic_frequency.length > 0">
+          <span>{{ systolic_frequency }}</span>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <figure id="diastolicFrequency"></figure>
+        <div class="alert alert-info" id="no-result" *ngIf="diastolic_frequency && diastolic_frequency.length > 0">
+          <span>{{ diastolic_frequency }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <figure id="pulseFrequency"></figure>
+        <div class="alert alert-info" id="no-result" *ngIf="pulse_frequency && pulse_frequency.length > 0">
+          <span>{{ pulse_frequency }}</span>
+        </div>
+      </div>
+    </div>
+
+    <h2 *ngIf="bloodpressures && bloodpressures.length > 0">Classification & comparsion target achieved rate in different timeslot</h2>
+    <div class="row">
+      <div class="col-md-6">
+        <figure id="scatterPlot"></figure>
+        <div class="alert alert-info" id="no-result" *ngIf="target_scatter && target_scatter.length > 0">
+          <span>{{ target_scatter }}</span>
+        </div>
+      </div>
+    </div>
+
+    <h2 *ngIf="bloodpressures && bloodpressures.length > 0">Annual overview: monthly comparisons table of targets, mean and variance</h2>
+    <div class="row">
+      <div class="col-md-9" style="overflow: auto">
+        <figure id="table"></figure>
+      </div>
+      <div class="col-md-3" *ngIf="bp_pulse_over_year && bp_pulse_over_year.length > 0" style="position: relative">
+        <img src="/content/images/table_legend.png " alt="Legend" id="legend" style="width: 100%; height: auto" />
+        <div style="position: absolute; bottom: 10px; left: 0px; display: flex; flex-direction: column; gap: 3px">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="zoomIn()"
+            *ngIf="bp_pulse_over_year && bp_pulse_over_year.length > 0"
+            style="padding: 0px 8px"
+          >
+            +
+          </button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="zoomOut()"
+            *ngIf="bp_pulse_over_year && bp_pulse_over_year.length > 0"
+            style="padding: 0px 9px"
+          >
+            -
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="alert alert-info" id="no-result" *ngIf="bp_pulse_over_year && bp_pulse_over_year.length > 0">
+        <span [innerHTML]="bp_pulse_over_year"></span>
+      </div>
+    </div>
+
+    <div class="row justify-content-start">
+      <div class="col-auto" *ngIf="bp_pulse_over_year && bp_pulse_over_year.length > 0">
+        <span class="fw-bold">Choose the time of event(e.g. change medications):</span>
+        <br /><br />
+      </div>
+      <div class="col-auto">
+        <div id="dropDownMenu"></div>
+      </div>
+      <div class="col-auto">
+        <div id="secondDropDownMenu"></div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-5 d-flexs align-items-center">
+        <figure id="subtable"></figure>
+      </div>
+
+      <div class="col-7 d-flex align-items-center">
+        <div class="alert alert-info" id="no-result" *ngIf="subtable_insights && subtable_insights.length > 0">
+          <span [innerHTML]="subtable_insights"></span>
+        </div>
+      </div>
+    </div>
+
+    <h2 *ngIf="bloodpressures && bloodpressures.length > 0">Annual trend analysis: boxplot with outliers detection</h2>
+    <div class="row">
+      <div class="col-md-6">
+        <figure id="systolic_boxplot"></figure>
+        <div class="alert alert-info" id="no-result" *ngIf="systolic_box && systolic_box.length > 0">
+          <span>{{ systolic_box }}</span>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <figure id="diastolic_boxplot"></figure>
+        <div class="alert alert-info" id="no-result" *ngIf="diastolic_box && diastolic_box.length > 0">
+          <span>{{ diastolic_box }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <figure id="pulse_boxplot"></figure>
+        <div class="alert alert-info" id="no-result" *ngIf="pulse_box && pulse_box.length > 0">
+          <span>{{ pulse_box }}</span>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="bloodpressures && bloodpressures.length > 0" style="position: fixed; bottom: 0.5vw; right: 0.5vh; z-index: 1000">
+      <button (click)="scrollToTop()" class="btn btn-secondary btn-sm" title="Back to top">↑</button>
+    </div>
+  </div>
+</div>

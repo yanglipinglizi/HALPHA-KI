@@ -1,0 +1,36 @@
+{
+  "insightsApp": {
+    "patient": {
+      "home": {
+        "title": "Patients",
+        "refreshListLabel": "Liste aktualisieren",
+        "createLabel": "Patient erstellen",
+        "createOrEditLabel": "Patient erstellen oder bearbeiten",
+        "notFound": "Keine Patients gefunden"
+      },
+      "created": "Patient erstellt mit ID {{ param }}",
+      "updated": "Patient aktualisiert mit ID {{ param }}",
+      "deleted": "Patient gelöscht mit ID {{ param }}",
+      "delete": {
+        "question": "Soll Patient {{ id }} wirklich dauerhaft gelöscht werden?"
+      },
+      "detail": {
+        "title": "Patient"
+      },
+      "id": "ID",
+      "health": "Health",
+      "geo": "Geo",
+      "user_id": "User Id",
+      "nickname": "Nickname",
+      "title": "Title",
+      "birthday": "Birthday",
+      "sex": "Sex",
+      "home_latitude": "Home Latitude",
+      "home_longitude": "Home Longitude",
+      "medical_preconditions": "Medical Preconditions",
+      "bloodpressure": "Bloodpressure",
+      "userActivity": "User Activity",
+      "geoLocation": "Geo Location"
+    }
+  }
+}

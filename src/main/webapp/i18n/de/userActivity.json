@@ -1,0 +1,28 @@
+{
+  "insightsApp": {
+    "userActivity": {
+      "home": {
+        "title": "User Activities",
+        "refreshListLabel": "Liste aktualisieren",
+        "createLabel": "User Activity erstellen",
+        "createOrEditLabel": "User Activity erstellen oder bearbeiten",
+        "notFound": "Keine User Activities gefunden"
+      },
+      "created": "User Activity erstellt mit ID {{ param }}",
+      "updated": "User Activity aktualisiert mit ID {{ param }}",
+      "deleted": "User Activity gelöscht mit ID {{ param }}",
+      "delete": {
+        "question": "Soll User Activity {{ id }} wirklich dauerhaft gelöscht werden?"
+      },
+      "detail": {
+        "title": "User Activity"
+      },
+      "id": "ID",
+      "reportedFor": "Reported For",
+      "recordedAt": "Recorded At",
+      "userId": "User Id",
+      "reportedAbsoluteCount": "Reported Absolute Count",
+      "patient": "Patient"
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "insightsApp": {
+    "userActivity": {
+      "home": {
+        "title": "UserActivities",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau User Activity",
+        "createOrEditLabel": "Créer ou éditer un User Activity",
+        "notFound": "Aucun User Activity trouvé"
+      },
+      "created": "Un nouveau User Activity a été créé avec l'identifiant {{ param }}",
+      "updated": "Le User Activity avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le User Activity avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le User Activity {{ id }} ?"
+      },
+      "detail": {
+        "title": "User Activity"
+      },
+      "id": "ID",
+      "reportedFor": "Reported For",
+      "recordedAt": "Recorded At",
+      "userId": "User Id",
+      "reportedAbsoluteCount": "Reported Absolute Count",
+      "patient": "Patient"
+    }
+  }
+}

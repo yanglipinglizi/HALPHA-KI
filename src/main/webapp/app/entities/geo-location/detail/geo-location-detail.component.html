@@ -1,0 +1,80 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="geoLocation">
+      <h2 data-cy="geoLocationDetailsHeading"><span jhiTranslate="insightsApp.geoLocation.detail.title">Geo Location</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ geoLocation.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="insightsApp.geoLocation.longitude">Longitude</span></dt>
+        <dd>
+          <span>{{ geoLocation.longitude }}</span>
+        </dd>
+        <dt><span jhiTranslate="insightsApp.geoLocation.acquired_at">Acquired At</span></dt>
+        <dd>
+          <span>{{ geoLocation.acquired_at }}</span>
+        </dd>
+        <dt><span jhiTranslate="insightsApp.geoLocation.geo_fence_status">Geo Fence Status</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'insightsApp.geoFence.' + geoLocation.geo_fence_status }}">{{ geoLocation.geo_fence_status }}</span>
+        </dd>
+        <dt><span jhiTranslate="insightsApp.geoLocation.connected_to_trusted_wifi">Connected To Trusted Wifi</span></dt>
+        <dd>
+          <span>{{ geoLocation.connected_to_trusted_wifi }}</span>
+        </dd>
+        <dt><span jhiTranslate="insightsApp.geoLocation.source_of_geolocation">Source Of Geolocation</span></dt>
+        <dd>
+          <span>{{ geoLocation.source_of_geolocation }}</span>
+        </dd>
+        <dt><span jhiTranslate="insightsApp.geoLocation.latitude">Latitude</span></dt>
+        <dd>
+          <span>{{ geoLocation.latitude }}</span>
+        </dd>
+        <dt><span jhiTranslate="insightsApp.geoLocation.recorded_at">Recorded At</span></dt>
+        <dd>
+          <span>{{ geoLocation.recorded_at }}</span>
+        </dd>
+        <dt><span jhiTranslate="insightsApp.geoLocation.accuracy">Accuracy</span></dt>
+        <dd>
+          <span>{{ geoLocation.accuracy }}</span>
+        </dd>
+        <dt><span jhiTranslate="insightsApp.geoLocation.geofence_detailed_status">Geofence Detailed Status</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'insightsApp.geoFenceDetailedStatus.' + geoLocation.geofence_detailed_status }}">{{
+            geoLocation.geofence_detailed_status
+          }}</span>
+        </dd>
+        <dt><span jhiTranslate="insightsApp.geoLocation.just_left_geofence_time">Just Left Geofence Time</span></dt>
+        <dd>
+          <span>{{ geoLocation.just_left_geofence_time }}</span>
+        </dd>
+        <dt><span jhiTranslate="insightsApp.geoLocation.user_id">User Id</span></dt>
+        <dd>
+          <span>{{ geoLocation.user_id }}</span>
+        </dd>
+        <dt><span jhiTranslate="insightsApp.geoLocation.patient">Patient</span></dt>
+        <dd>
+          <div *ngIf="geoLocation.patient">
+            <a [routerLink]="['/patient', geoLocation.patient.id, 'view']">{{ geoLocation.patient.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Zurück</span>
+      </button>
+
+      <button type="button" [routerLink]="['/geo-location', geoLocation.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Bearbeiten</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,127 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-bloodpressure-heading"
+        data-cy="BloodpressureCreateUpdateHeading"
+        jhiTranslate="insightsApp.bloodpressure.home.createOrEditLabel"
+      >
+        Bloodpressure erstellen oder bearbeiten
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="insightsApp.bloodpressure.systolic" for="field_systolic">Systolic</label>
+          <input type="number" class="form-control" name="systolic" id="field_systolic" data-cy="systolic" formControlName="systolic" />
+          <div *ngIf="editForm.get('systolic')!.invalid && (editForm.get('systolic')!.dirty || editForm.get('systolic')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('systolic')?.errors?.min"
+              jhiTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+              >Dieses Feld muss größer als 0 sein.</small
+            >
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('systolic')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+              >Dieses Feld muss eine Zahl sein.</small
+            >
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="insightsApp.bloodpressure.diastolic" for="field_diastolic">Diastolic</label>
+          <input type="number" class="form-control" name="diastolic" id="field_diastolic" data-cy="diastolic" formControlName="diastolic" />
+          <div *ngIf="editForm.get('diastolic')!.invalid && (editForm.get('diastolic')!.dirty || editForm.get('diastolic')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('diastolic')?.errors?.min"
+              jhiTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+              >Dieses Feld muss größer als 0 sein.</small
+            >
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('diastolic')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+              >Dieses Feld muss eine Zahl sein.</small
+            >
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="insightsApp.bloodpressure.pulse" for="field_pulse">Pulse</label>
+          <input type="number" class="form-control" name="pulse" id="field_pulse" data-cy="pulse" formControlName="pulse" />
+          <div *ngIf="editForm.get('pulse')!.invalid && (editForm.get('pulse')!.dirty || editForm.get('pulse')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('pulse')?.errors?.min"
+              jhiTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+              >Dieses Feld muss größer als 0 sein.</small
+            >
+            <small class="form-text text-danger" [hidden]="!editForm.get('pulse')?.errors?.number" jhiTranslate="entity.validation.number"
+              >Dieses Feld muss eine Zahl sein.</small
+            >
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="insightsApp.bloodpressure.recorded_at" for="field_recorded_at">Recorded At</label>
+          <input
+            type="text"
+            class="form-control"
+            name="recorded_at"
+            id="field_recorded_at"
+            data-cy="recorded_at"
+            formControlName="recorded_at"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="insightsApp.bloodpressure.user_id" for="field_user_id">User Id</label>
+          <input type="number" class="form-control" name="user_id" id="field_user_id" data-cy="user_id" formControlName="user_id" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="insightsApp.bloodpressure.patient" for="field_patient">Patient</label>
+          <select
+            class="form-control"
+            id="field_patient"
+            data-cy="patient"
+            name="patient"
+            formControlName="patient"
+            [compareWith]="comparePatient"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="patientOption" *ngFor="let patientOption of patientsSharedCollection">{{ patientOption.id }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Abbrechen</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Speichern</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

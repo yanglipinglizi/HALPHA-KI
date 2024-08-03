@@ -1,0 +1,225 @@
+<div>
+  <div class="d-flex justify-content-end">
+    <button type="submit" (click)="previousState()" class="btn btn-info me-2" data-cy="entityDetailsBackButton">
+      <fa-icon icon="arrow-left"></fa-icon>&nbsp;
+      <span jhiTranslate="entity.action.back">Zurück</span>
+    </button>
+    <button type="button" [routerLink]="['/patient/' + id + '/view']" class="btn btn-primary me-2">
+      <fa-icon icon="eye"></fa-icon>&nbsp;<span>Patient Detail</span>
+    </button>
+    <button type="button" [routerLink]="['/bloodpressures/userId/' + userId]" class="btn btn-primary me-2">
+      <fa-icon icon="eye"></fa-icon>&nbsp;<span>Blood Pressure</span>
+    </button>
+    <button type="button" [routerLink]="['/user-activity/userId/' + userId]" class="btn btn-primary me-2">
+      <fa-icon icon="eye"></fa-icon>&nbsp;<span>User Activity</span>
+    </button>
+  </div>
+  <h1 *ngIf="nameSelect">Geolocation: Graphs and Insights for {{ userName }}User ID: {{ userId }}</h1>
+  <div>
+    <div class="alert alert-warning" id="no-result" *ngIf="dataSelect && (!geoLocations || geoLocations.length === 0)">
+      <span jhiTranslate="insightsApp.geoLocation.home.notFound">No Geo Location data fund</span>
+    </div>
+
+    <div class="d-flex-customized2">
+      <div class="d-flex" *ngIf="renderSelect">
+        <div class="btn-group-vertical" role="group" aria-label="Page Navigation">
+          <button
+            (click)="scrollTo('pieChart')"
+            class="btn btn-secondary"
+            *ngIf="dailyDurationOverviewInsights && dailyDurationOverviewInsights.length > 0"
+          >
+            Time Spent Overview
+          </button>
+          <button
+            (click)="scrollTo('barOfDurationByDistanceRangeIn7Days')"
+            class="btn btn-secondary"
+            *ngIf="dailyDurationInsights && dailyDurationInsights.length > 0"
+          >
+            Time Spent in Different Ranges
+          </button>
+          <button (click)="scrollTo('map')" class="btn btn-secondary" *ngIf="geoLocations && geoLocations.length > 0">
+            Overview on Map
+          </button>
+          <button (click)="scrollTo('comparisonTable')" class="btn btn-secondary">Comparison Table</button>
+          <button
+            (click)="scrollTo('charts1')"
+            class="btn btn-secondary"
+            *ngIf="monthlyDurationInsights && monthlyDurationInsights.length > 0"
+          >
+            Duration Charts
+          </button>
+          <button
+            (click)="scrollTo('charts2')"
+            class="btn btn-secondary"
+            *ngIf="monthlyFrequencyInsights && monthlyFrequencyInsights.length > 0"
+          >
+            Frequency Charts
+          </button>
+          <button
+            (click)="scrollTo('charts3')"
+            class="btn btn-secondary"
+            *ngIf="monthlyLocationNumberInsights && monthlyLocationNumberInsights.length > 0"
+          >
+            Location Number Charts
+          </button>
+        </div>
+        <div class="bg-light p-3 flex-grow-1">
+          <span [innerHTML]="geoSummary"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <figure id="pieChart"></figure>
+        <div class="alert alert-info" id="no-result7" *ngIf="dailyDurationOverviewInsights && dailyDurationOverviewInsights.length > 0">
+          <span [innerHTML]="dailyDurationOverviewInsights"></span>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="row">
+        <div class="col-md-6">
+          <figure id="barOfDurationByDistanceRangeIn7Days"></figure>
+          <div class="alert alert-info" id="no-result8" *ngIf="dailyDurationInsights && dailyDurationInsights.length > 0">
+            <span [innerHTML]="dailyDurationInsights"></span>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <figure id="dailyFluctuation"></figure>
+          <div class="alert alert-info" id="no-result9" *ngIf="dailyFluctuationsInsights && dailyFluctuationsInsights.length > 0">
+            <span [innerHTML]="dailyFluctuationsInsights"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div *ngIf="geoLocations && geoLocations.length > 0">
+        <div class="col-md-1">
+          <div style="align-self: flex-start">
+            <div *ngIf="renderSelect" class="row">
+              <select [(ngModel)]="amongMonthMapSelection" (change)="onMonthMapNumber($event)">
+                <option *ngFor="let month of last12Months" [value]="month">{{ month }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div style="width: 100%; height: 600px">
+            <figure id="mapContainer"></figure>
+            <div id="map"></div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div id="tableContainer"></div>
+        </div>
+      </div>
+      <div class="row">
+        <div style="margin-top: 100px">
+          <div class="alert alert-info" id="no-result1" *ngIf="mapInsights && mapInsights.length > 0">
+            <span [innerHTML]="mapInsights"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-10">
+        <div style="width: 100%; height: 600px; padding-top: 2%; padding-bottom: 1%">
+          <div style="text-align: center">
+            <figure id="comparisonTable"></figure>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div style="margin-top: 50px">
+          <div class="alert alert-info" id="no-result1" *ngIf="comparisonInsights && comparisonInsights.length > 0">
+            <span [innerHTML]="comparisonInsights"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6"></div>
+      <div class="col-md-customed">
+        <figure id="charts1"></figure>
+        <div style="align-self: flex-start">
+          <div *ngIf="renderSelect" class="row">
+            <select [(ngModel)]="amongLast12MonthsSelectedDuration" (change)="onMonthChangeDuration($event)">
+              <option *ngFor="let month of last12Months" [value]="month">{{ month }}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <figure id="barOfDurationByDistanceRangePerMonth"></figure>
+        <div class="alert alert-info" id="no-result1" *ngIf="monthlyDurationInsights && monthlyDurationInsights.length > 0">
+          <span [innerHTML]="monthlyDurationInsights"></span>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <figure id="specificMonthlyDurationInsights"></figure>
+        <div class="alert alert-info" id="no-result2" *ngIf="monthlyLocationNumberInsights && monthlyLocationNumberInsights.length > 0">
+          <span [innerHTML]="specificMonthlyDurationInsights"></span>
+        </div>
+      </div>
+    </div>
+    <div class="row" id="charts2">
+      <div class="col-md-6"></div>
+      <div class="col-md-customed">
+        <div style="align-self: flex-start">
+          <div *ngIf="renderSelect" class="row">
+            <select [(ngModel)]="amongLast12MonthsSelectedFrequency" (change)="onMonthChangeFrequency($event)">
+              <option *ngFor="let month of last12Months" [value]="month">{{ month }}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <figure id="barOfFrequencyByDistanceRangePerMonth"></figure>
+        <div class="alert alert-info" id="no-result3" *ngIf="monthlyFrequencyInsights && monthlyFrequencyInsights.length > 0">
+          <span [innerHTML]="monthlyFrequencyInsights"></span>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <figure id="specificMonthlyFrequencyInsights"></figure>
+        <div class="alert alert-info" id="no-result4" *ngIf="monthlyLocationNumberInsights && monthlyLocationNumberInsights.length > 0">
+          <span [innerHTML]="specificMonthlyFrequencyInsights"></span>
+        </div>
+      </div>
+    </div>
+    <div class="row" id="charts3">
+      <div class="col-md-6"></div>
+      <div class="col-md-customed">
+        <div style="align-self: flex-start">
+          <div *ngIf="renderSelect" class="row">
+            <select [(ngModel)]="amongLast12MonthsSelectedLocationNumber" (change)="onMonthChangeLocationNumber($event)">
+              <option *ngFor="let month of last12Months" [value]="month">{{ month }}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <figure id="barOfLocationNumberByDistanceRangePerMonth"></figure>
+        <div class="alert alert-info" id="no-result5" *ngIf="monthlyLocationNumberInsights && monthlyLocationNumberInsights.length > 0">
+          <span [innerHTML]="monthlyLocationNumberInsights"></span>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <figure id="specificmonthlyLocationNumberInsights"></figure>
+        <div class="alert alert-info" id="no-result6" *ngIf="monthlyLocationNumberInsights && monthlyLocationNumberInsights.length > 0">
+          <span [innerHTML]="specificMonthlyLocationNumberInsights"></span>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="geoLocations && geoLocations.length > 0" style="position: fixed; bottom: 0.5vw; right: 0.5vh; z-index: 1000">
+      <button (click)="scrollToTop()" class="btn btn-secondary btn-sm" title="Back to top">↑</button>
+    </div>
+  </div>
+</div>

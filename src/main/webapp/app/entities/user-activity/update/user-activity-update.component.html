@@ -1,0 +1,96 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-user-activity-heading"
+        data-cy="UserActivityCreateUpdateHeading"
+        jhiTranslate="insightsApp.userActivity.home.createOrEditLabel"
+      >
+        User Activity erstellen oder bearbeiten
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="insightsApp.userActivity.reportedFor" for="field_reportedFor">Reported For</label>
+          <input
+            type="text"
+            class="form-control"
+            name="reportedFor"
+            id="field_reportedFor"
+            data-cy="reportedFor"
+            formControlName="reportedFor"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="insightsApp.userActivity.recordedAt" for="field_recordedAt">Recorded At</label>
+          <input
+            type="text"
+            class="form-control"
+            name="recordedAt"
+            id="field_recordedAt"
+            data-cy="recordedAt"
+            formControlName="recordedAt"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="insightsApp.userActivity.userId" for="field_userId">User Id</label>
+          <input type="number" class="form-control" name="userId" id="field_userId" data-cy="userId" formControlName="userId" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="insightsApp.userActivity.reportedAbsoluteCount" for="field_reportedAbsoluteCount"
+            >Reported Absolute Count</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="reportedAbsoluteCount"
+            id="field_reportedAbsoluteCount"
+            data-cy="reportedAbsoluteCount"
+            formControlName="reportedAbsoluteCount"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="insightsApp.userActivity.patient" for="field_patient">Patient</label>
+          <select
+            class="form-control"
+            id="field_patient"
+            data-cy="patient"
+            name="patient"
+            formControlName="patient"
+            [compareWith]="comparePatient"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="patientOption" *ngFor="let patientOption of patientsSharedCollection">{{ patientOption.id }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Abbrechen</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Speichern</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

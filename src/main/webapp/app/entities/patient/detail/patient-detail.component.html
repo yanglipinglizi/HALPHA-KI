@@ -1,0 +1,114 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="patient">
+      <h2 data-cy="patientDetailsHeading"><span jhiTranslate="insightsApp.patient.detail.title">Patient</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ patient.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="insightsApp.patient.nickname">Nickname</span></dt>
+        <dd>
+          <span>{{ patient.nickname }}</span>
+        </dd>
+        <dt><span jhiTranslate="insightsApp.patient.title">Title</span></dt>
+        <dd>
+          <span>{{ patient.title }}</span>
+        </dd>
+        <dt><span jhiTranslate="insightsApp.patient.birthday">Birthday</span></dt>
+        <dd>
+          <span>{{ patient.birthday }}</span>
+        </dd>
+        <dt><span jhiTranslate="insightsApp.patient.sex">Sex</span></dt>
+        <dd>
+          <span>{{ patient.sex }}</span>
+        </dd>
+        <dt><span jhiTranslate="insightsApp.patient.home_longitude">home_longitude</span></dt>
+        <dd>
+          <span>{{ patient.home_longitude }}</span>
+        </dd>
+        <dt><span jhiTranslate="insightsApp.patient.home_latitude">home_latitude</span></dt>
+        <dd>
+          <span>{{ patient.home_latitude }}</span>
+        </dd>
+        <dt><span jhiTranslate="insightsApp.patient.medical_preconditions">Medical Preconditions</span></dt>
+        <dd>
+          <span>{{ patient.medical_preconditions }}</span>
+        </dd>
+        <dt><span jhiTranslate="insightsApp.patient.health">Health</span></dt>
+        <dd>
+          <!--<span>{{ patient.health }}</span>-->
+          <span
+            [ngClass]="{
+              label: true,
+              'label-low': patient.health === 'low',
+              'label-medium': patient.health === 'medium',
+              'label-high': patient.health === 'high'
+            }"
+            >{{ patient.health }}</span
+          >
+        </dd>
+        <dt><span jhiTranslate="insightsApp.patient.geo">Geo</span></dt>
+        <dd>
+          <!--<span>{{ patient.geo }}</span>-->
+          <span
+            [ngClass]="{
+              label: true,
+              'label-low': patient.geo === 'low',
+              'label-medium': patient.geo === 'medium',
+              'label-high': patient.geo === 'high'
+            }"
+            >{{ patient.geo }}</span
+          >
+        </dd>
+        <dt><span jhiTranslate="insightsApp.patient.user_id">User Id</span></dt>
+        <dd>
+          <span>{{ patient.user_id }}</span>
+        </dd>
+
+        <dt><span>Summary for bloodpressure</span></dt>
+        <dd id="summaryContent">
+          <!--          <button id="generateButton">Generate Summary</button>-->
+          <div><span [innerHTML]="summary"></span></div>
+          <script src=".../bloodpressure/list/bloodpressure.component.ts"></script>
+        </dd>
+
+        <dt><span>Summary for GeoLocation and UserActivity</span></dt>
+        <dd id="summaryContent">
+          <!--          <button id="generateButton">Generate Summary</button>-->
+          <div><span [innerHTML]="geoSummary"></span></div>
+          <script src=".../geo-location/list/geo-location.component.ts"></script>
+        </dd>
+
+        <!--        <script src="C:\Users\Harry\Desktop\alpha-insights\src\main\webapp\app\entities\bloodpressure\list\bloodpressure.component.ts"></script>-->
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Zurück</span>
+      </button>
+
+      <button type="button" [routerLink]="['/patient', patient.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Bearbeiten</span>
+      </button>
+
+      <button type="button" [routerLink]="['/bloodpressures/userId', patient.user_id]" class="btn btn-primary">
+        <fa-icon icon="eye"></fa-icon>&nbsp;<span>Blood Pressure</span>
+      </button>
+      <!-- to do:  change the router  -->
+      <button type="button" [routerLink]="['/user-activity/userId', patient.user_id]" class="btn btn-primary">
+        <fa-icon icon="eye"></fa-icon>&nbsp;<span>User Activity</span>
+      </button>
+      <!-- to do:  change the router  -->
+      <button type="button" [routerLink]="['/geo-location/userId', patient.user_id]" class="btn btn-primary">
+        <fa-icon icon="eye"></fa-icon>&nbsp;<span>Geo Location</span>
+      </button>
+    </div>
+  </div>
+</div>

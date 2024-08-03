@@ -1,0 +1,12 @@
+{
+  "insightsApp": {
+    "geoFenceDetailedStatus": {
+      "null": "",
+      "IN_GEOFENCE": "IN_GEOFENCE",
+      "STILL_JUST_LEFT_GEOFENCE": "STILL_JUST_LEFT_GEOFENCE",
+      "RETURNED_TO_GEOFENCE": "RETURNED_TO_GEOFENCE",
+      "JUST_LEFT_GEOFENCE": "JUST_LEFT_GEOFENCE",
+      "OUTSIDE_GEOFENCE": "OUTSIDE_GEOFENCE"
+    }
+  }
+}

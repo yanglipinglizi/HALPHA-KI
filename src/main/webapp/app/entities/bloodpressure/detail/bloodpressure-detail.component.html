@@ -1,0 +1,54 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="bloodpressure">
+      <h2 data-cy="bloodpressureDetailsHeading"><span jhiTranslate="insightsApp.bloodpressure.detail.title">Bloodpressure</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ bloodpressure.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="insightsApp.bloodpressure.systolic">Systolic</span></dt>
+        <dd>
+          <span>{{ bloodpressure.systolic }}</span>
+        </dd>
+        <dt><span jhiTranslate="insightsApp.bloodpressure.diastolic">Diastolic</span></dt>
+        <dd>
+          <span>{{ bloodpressure.diastolic }}</span>
+        </dd>
+        <dt><span jhiTranslate="insightsApp.bloodpressure.pulse">Pulse</span></dt>
+        <dd>
+          <span>{{ bloodpressure.pulse }}</span>
+        </dd>
+        <dt><span jhiTranslate="insightsApp.bloodpressure.recorded_at">Recorded At</span></dt>
+        <dd>
+          <span>{{ bloodpressure.recorded_at }}</span>
+        </dd>
+        <dt><span jhiTranslate="insightsApp.bloodpressure.user_id">User Id</span></dt>
+        <dd>
+          <span>{{ bloodpressure.userId }}</span>
+        </dd>
+        <dt><span jhiTranslate="insightsApp.bloodpressure.patient">Patient</span></dt>
+        <dd>
+          <div *ngIf="bloodpressure.patient">
+            <a [routerLink]="['/patient', bloodpressure.patient.id, 'view']">{{ bloodpressure.patient.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Zurück</span>
+      </button>
+
+      <button type="button" [routerLink]="['/bloodpressure', bloodpressure.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Bearbeiten</span>
+      </button>
+    </div>
+  </div>
+</div>

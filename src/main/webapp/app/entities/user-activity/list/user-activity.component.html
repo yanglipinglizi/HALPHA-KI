@@ -1,0 +1,223 @@
+<div>
+  <!--  <h2>Step Data Charts</h2>-->
+  <div>
+    <!--    <div>-->
+    <!--      <h6>Note:</h6>-->
+    <!--      <div>Here is userid: 25601</div>-->
+    <!--      <div>Suppose today: 2023-12-15</div>-->
+    <!--      <div>Todo: add real average and Top 10 of the same age group (but we don't have age information yet)</div>-->
+    <!--      <div></div>-->
+    <!--    </div>-->
+    <div class="d-flex justify-content-end">
+      <button type="submit" (click)="previousState()" class="btn btn-info me-2" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;
+        <span jhiTranslate="entity.action.back">Zurück</span>
+      </button>
+      <button type="button" [routerLink]="['/patient/' + id + '/view']" class="btn btn-primary me-2">
+        <fa-icon icon="eye"></fa-icon>&nbsp;<span>Patient Detail</span>
+      </button>
+      <button type="button" [routerLink]="['/bloodpressures/userId/' + userId]" class="btn btn-primary me-2">
+        <fa-icon icon="eye"></fa-icon>&nbsp;<span>Blood Pressure</span>
+      </button>
+      <!-- to do:  change the router  -->
+      <button type="button" [routerLink]="['/geo-location/userId/' + userId]" class="btn btn-primary">
+        <fa-icon icon="eye"></fa-icon>&nbsp;<span>Geo Location</span>
+      </button>
+    </div>
+    <h1 *ngIf="nameSelect">Step data: Graphs and Insights for {{ userName }}User ID: {{ userId }}</h1>
+    <div>
+      <div class="alert alert-warning" id="no-result" *ngIf="userActivities?.length === 0">
+        <span jhiTranslate="insightsApp.userActivity.home.notFound">Keine User Activity gefunden</span>
+      </div>
+
+      <div class="d-flex-customized">
+        <div class="d-flex" *ngIf="renderSelect">
+          <div class="btn-group-vertical" role="group" aria-label="Page Navigation">
+            <button (click)="scrollTo('bar2')" class="btn btn-secondary" *ngIf="monthlyStepInsights && monthlyStepInsights.length > 0">
+              Data in last 12 Month
+            </button>
+            <button (click)="scrollTo('bar1')" class="btn btn-secondary" *ngIf="dailyStepInsights && dailyStepInsights.length > 0">
+              Data in a specific Month
+            </button>
+          </div>
+          <div class="bg-light p-3 flex-grow-1" id="summaryUserActivityContainer" *ngIf="userActivities && userActivities.length > 0">
+            <span [innerHTML]="userActivitiesSummary"> </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <figure id="bar2"></figure>
+          <div class="alert alert-info" id="no-result" *ngIf="monthlyStepInsights && monthlyStepInsights.length > 0">
+            <span [innerHTML]="monthlyStepInsights"></span>
+          </div>
+        </div>
+        <div class="col-md-6"></div>
+      </div>
+      <div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="col-md-customed2">
+              <div style="align-self: flex-start">
+                <div *ngIf="renderSelect" class="row">
+                  <select [(ngModel)]="amongLast12MonthsSelectedDailyData" (change)="onMonthChangeDailyData($event)">
+                    <option *ngFor="let month of last12Months" [value]="month">{{ month }}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <figure id="bar1"></figure>
+            <div class="alert alert-info" id="no-result" *ngIf="dailyStepInsights && dailyStepInsights.length > 0">
+              <span [innerHTML]="dailyStepInsights"></span>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="col-md-customed2">
+              <div style="align-self: flex-start">
+                <div *ngIf="renderSelect" class="row">
+                  <select [(ngModel)]="amongLast12MonthsSelectedWeeklyData" (change)="onMonthChangeWeeklyData($event)">
+                    <option *ngFor="let month of last12Months" [value]="month">{{ month }}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <figure id="bar3"></figure>
+            <div class="alert alert-info" id="no-result" *ngIf="weeklyStepInsights && weeklyStepInsights.length > 0">
+              <span [innerHTML]="weeklyStepInsights"></span>
+            </div>
+          </div>
+        </div>
+
+        <!--  <h2 id="page-heading" data-cy="UserActivityHeading">-->
+        <!--    <span jhiTranslate="insightsApp.userActivity.home.title">User Activities</span>-->
+
+        <!--    <div class="d-flex justify-content-end">-->
+        <!--      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">-->
+        <!--        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>-->
+        <!--        <span jhiTranslate="insightsApp.userActivity.home.refreshListLabel">Liste aktualisieren</span>-->
+        <!--      </button>-->
+
+        <!--      <button-->
+        <!--        id="jh-create-entity"-->
+        <!--        data-cy="entityCreateButton"-->
+        <!--        class="btn btn-primary jh-create-entity create-user-activity"-->
+        <!--        [routerLink]="['/user-activity/new']"-->
+        <!--      >-->
+        <!--        <fa-icon icon="plus"></fa-icon>-->
+        <!--        <span jhiTranslate="insightsApp.userActivity.home.createLabel">User Activity erstellen</span>-->
+        <!--      </button>-->
+        <!--    </div>-->
+        <!--  </h2>-->
+
+        <!--  <jhi-alert-error></jhi-alert-error>-->
+
+        <!--  <jhi-alert></jhi-alert>-->
+
+        <!--  <div class="alert alert-warning" id="no-result" *ngIf="userActivities?.length === 0">-->
+        <!--    <span jhiTranslate="insightsApp.userActivity.home.notFound">Keine User Activities gefunden</span>-->
+        <!--  </div>-->
+
+        <!--  <div class="table-responsive table-entities" id="entities" *ngIf="userActivities && userActivities.length > 0">-->
+        <!--    <table class="table table-striped" aria-describedby="page-heading">-->
+        <!--      <thead>-->
+        <!--        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">-->
+        <!--          <th scope="col" jhiSortBy="id">-->
+        <!--            <div class="d-flex">-->
+        <!--              <span jhiTranslate="global.field.id">ID</span>-->
+        <!--              <fa-icon class="p-1" icon="sort"></fa-icon>-->
+        <!--            </div>-->
+        <!--          </th>-->
+        <!--          <th scope="col" jhiSortBy="reportedFor">-->
+        <!--            <div class="d-flex">-->
+        <!--              <span jhiTranslate="insightsApp.userActivity.reportedFor">Reported For</span>-->
+        <!--              <fa-icon class="p-1" icon="sort"></fa-icon>-->
+        <!--            </div>-->
+        <!--          </th>-->
+        <!--          <th scope="col" jhiSortBy="recordedAt">-->
+        <!--            <div class="d-flex">-->
+        <!--              <span jhiTranslate="insightsApp.userActivity.recordedAt">Recorded At</span>-->
+        <!--              <fa-icon class="p-1" icon="sort"></fa-icon>-->
+        <!--            </div>-->
+        <!--          </th>-->
+        <!--          <th scope="col" jhiSortBy="userId">-->
+        <!--            <div class="d-flex">-->
+        <!--              <span jhiTranslate="insightsApp.userActivity.userId">User Id</span>-->
+        <!--              <fa-icon class="p-1" icon="sort"></fa-icon>-->
+        <!--            </div>-->
+        <!--          </th>-->
+        <!--          <th scope="col" jhiSortBy="reportedAbsoluteCount">-->
+        <!--            <div class="d-flex">-->
+        <!--              <span jhiTranslate="insightsApp.userActivity.reportedAbsoluteCount">Reported Absolute Count</span>-->
+        <!--              <fa-icon class="p-1" icon="sort"></fa-icon>-->
+        <!--            </div>-->
+        <!--          </th>-->
+        <!--          <th scope="col" jhiSortBy="patient.id">-->
+        <!--            <div class="d-flex">-->
+        <!--              <span jhiTranslate="insightsApp.userActivity.patient">Patient</span>-->
+        <!--              <fa-icon class="p-1" icon="sort"></fa-icon>-->
+        <!--            </div>-->
+        <!--          </th>-->
+        <!--          <th scope="col"></th>-->
+        <!--        </tr>-->
+        <!--      </thead>-->
+        <!--      <tbody>-->
+        <!--        <tr *ngFor="let userActivity of userActivities; trackBy: trackId" data-cy="entityTable">-->
+        <!--          <td>-->
+        <!--            <a [routerLink]="['/user-activity', userActivity.id, 'view']">{{ userActivity.id }}</a>-->
+        <!--          </td>-->
+        <!--          <td>{{ userActivity.reportedFor }}</td>-->
+        <!--          <td>{{ userActivity.recordedAt }}</td>-->
+        <!--          <td>{{ userActivity.userId }}</td>-->
+        <!--          <td>{{ userActivity.reportedAbsoluteCount }}</td>-->
+        <!--          <td>-->
+        <!--            <div *ngIf="userActivity.patient">-->
+        <!--              <a [routerLink]="['/patient', userActivity.patient.id, 'view']">{{ userActivity.patient.id }}</a>-->
+        <!--            </div>-->
+        <!--          </td>-->
+        <!--          <td class="text-end">-->
+        <!--            <div class="btn-group">-->
+        <!--              <a [routerLink]="['/user-activity', userActivity.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">-->
+        <!--                <fa-icon icon="eye"></fa-icon>-->
+        <!--                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Details</span>-->
+        <!--              </a>-->
+
+        <!--              <a [routerLink]="['/user-activity', userActivity.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">-->
+        <!--                <fa-icon icon="pencil-alt"></fa-icon>-->
+        <!--                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Bearbeiten</span>-->
+        <!--              </a>-->
+
+        <!--              <button type="submit" (click)="delete(userActivity)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">-->
+        <!--                <fa-icon icon="times"></fa-icon>-->
+        <!--                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Löschen</span>-->
+        <!--              </button>-->
+        <!--            </div>-->
+        <!--          </td>-->
+        <!--        </tr>-->
+        <!--      </tbody>-->
+        <!--    </table>-->
+        <!--  </div>-->
+
+        <!--  <div *ngIf="userActivities && userActivities.length > 0">-->
+        <!--    <div class="d-flex justify-content-center">-->
+        <!--      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>-->
+        <!--    </div>-->
+
+        <!--    <div class="d-flex justify-content-center">-->
+        <!--      <ngb-pagination-->
+        <!--        [collectionSize]="totalItems"-->
+        <!--        [page]="page"-->
+        <!--        [pageSize]="itemsPerPage"-->
+        <!--        [maxSize]="5"-->
+        <!--        [rotate]="true"-->
+        <!--        [boundaryLinks]="true"-->
+        <!--        (pageChange)="navigateToPage($event)"-->
+        <!--      ></ngb-pagination>-->
+        <!--    </div>-->
+        <!--  </div>-->
+      </div>
+    </div>
+  </div>
+</div>

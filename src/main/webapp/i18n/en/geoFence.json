@@ -1,0 +1,14 @@
+{
+  "insightsApp": {
+    "geoFence": {
+      "null": "",
+      "GEOFENCE_DISABLED": "GEOFENCE_DISABLED",
+      "IN": "IN",
+      "ACCURACY_NEEDS_REFINEMENT": "ACCURACY_NEEDS_REFINEMENT",
+      "ESTIMATED_MEASURE_TO_BE_IGNORED": "ESTIMATED_MEASURE_TO_BE_IGNORED",
+      "OUT": "OUT",
+      "OLD_MEASURE_TO_BE_IGNORED": "OLD_MEASURE_TO_BE_IGNORED",
+      "UNKNOWN": "UNKNOWN"
+    }
+  }
+}

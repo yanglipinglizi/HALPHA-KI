@@ -1,0 +1,173 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-geo-location-heading"
+        data-cy="GeoLocationCreateUpdateHeading"
+        jhiTranslate="insightsApp.geoLocation.home.createOrEditLabel"
+      >
+        Geo Location erstellen oder bearbeiten
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="insightsApp.geoLocation.longitude" for="field_longitude">Longitude</label>
+          <input type="number" class="form-control" name="longitude" id="field_longitude" data-cy="longitude" formControlName="longitude" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="insightsApp.geoLocation.acquired_at" for="field_acquired_at">Acquired At</label>
+          <input
+            type="text"
+            class="form-control"
+            name="acquired_at"
+            id="field_acquired_at"
+            data-cy="acquired_at"
+            formControlName="acquired_at"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="insightsApp.geoLocation.geo_fence_status" for="field_geo_fence_status"
+            >Geo Fence Status</label
+          >
+          <select
+            class="form-control"
+            name="geo_fence_status"
+            formControlName="geo_fence_status"
+            id="field_geo_fence_status"
+            data-cy="geo_fence_status"
+          >
+            <option [ngValue]="null">{{ 'insightsApp.geoFence.null' | translate }}</option>
+            <option *ngFor="let geoFence of geoFenceValues" [value]="geoFence">{{ 'insightsApp.geoFence.' + geoFence | translate }}</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="insightsApp.geoLocation.connected_to_trusted_wifi" for="field_connected_to_trusted_wifi"
+            >Connected To Trusted Wifi</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="connected_to_trusted_wifi"
+            id="field_connected_to_trusted_wifi"
+            data-cy="connected_to_trusted_wifi"
+            formControlName="connected_to_trusted_wifi"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="insightsApp.geoLocation.source_of_geolocation" for="field_source_of_geolocation"
+            >Source Of Geolocation</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="source_of_geolocation"
+            id="field_source_of_geolocation"
+            data-cy="source_of_geolocation"
+            formControlName="source_of_geolocation"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="insightsApp.geoLocation.latitude" for="field_latitude">Latitude</label>
+          <input type="number" class="form-control" name="latitude" id="field_latitude" data-cy="latitude" formControlName="latitude" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="insightsApp.geoLocation.recorded_at" for="field_recorded_at">Recorded At</label>
+          <input
+            type="text"
+            class="form-control"
+            name="recorded_at"
+            id="field_recorded_at"
+            data-cy="recorded_at"
+            formControlName="recorded_at"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="insightsApp.geoLocation.accuracy" for="field_accuracy">Accuracy</label>
+          <input type="number" class="form-control" name="accuracy" id="field_accuracy" data-cy="accuracy" formControlName="accuracy" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="insightsApp.geoLocation.geofence_detailed_status" for="field_geofence_detailed_status"
+            >Geofence Detailed Status</label
+          >
+          <select
+            class="form-control"
+            name="geofence_detailed_status"
+            formControlName="geofence_detailed_status"
+            id="field_geofence_detailed_status"
+            data-cy="geofence_detailed_status"
+          >
+            <option [ngValue]="null">{{ 'insightsApp.geoFenceDetailedStatus.null' | translate }}</option>
+            <option *ngFor="let geoFenceDetailedStatus of geoFenceDetailedStatusValues" [value]="geoFenceDetailedStatus">
+              {{ 'insightsApp.geoFenceDetailedStatus.' + geoFenceDetailedStatus | translate }}
+            </option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="insightsApp.geoLocation.just_left_geofence_time" for="field_just_left_geofence_time"
+            >Just Left Geofence Time</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="just_left_geofence_time"
+            id="field_just_left_geofence_time"
+            data-cy="just_left_geofence_time"
+            formControlName="just_left_geofence_time"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="insightsApp.geoLocation.user_id" for="field_user_id">User Id</label>
+          <input type="number" class="form-control" name="user_id" id="field_user_id" data-cy="user_id" formControlName="user_id" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="insightsApp.geoLocation.patient" for="field_patient">Patient</label>
+          <select
+            class="form-control"
+            id="field_patient"
+            data-cy="patient"
+            name="patient"
+            formControlName="patient"
+            [compareWith]="comparePatient"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="patientOption" *ngFor="let patientOption of patientsSharedCollection">{{ patientOption.id }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Abbrechen</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Speichern</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,35 @@
+{
+  "insightsApp": {
+    "geoLocation": {
+      "home": {
+        "title": "GeoLocations",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Geo Location",
+        "createOrEditLabel": "Créer ou éditer un Geo Location",
+        "notFound": "Aucun Geo Location trouvé"
+      },
+      "created": "Un nouveau Geo Location a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Geo Location avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Geo Location avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Geo Location {{ id }} ?"
+      },
+      "detail": {
+        "title": "Geo Location"
+      },
+      "id": "ID",
+      "longitude": "Longitude",
+      "acquired_at": "Acquired At",
+      "geo_fence_status": "Geo Fence Status",
+      "connected_to_trusted_wifi": "Connected To Trusted Wifi",
+      "source_of_geolocation": "Source Of Geolocation",
+      "latitude": "Latitude",
+      "recorded_at": "Recorded At",
+      "accuracy": "Accuracy",
+      "geofence_detailed_status": "Geofence Detailed Status",
+      "just_left_geofence_time": "Just Left Geofence Time",
+      "user_id": "User Id",
+      "patient": "Patient"
+    }
+  }
+}
